@@ -7,6 +7,7 @@ public class RoboState : MonoBehaviour
     private MapManager mapManager;
     private RoboShooter roboShooter;
     private Transform vGimbalPivot;
+    private MeshRenderer gimbalCoverRenderer;
 
     public float health { get; private set; }
     public float damage { get; private set; }
@@ -24,6 +25,7 @@ public class RoboState : MonoBehaviour
     private void OnEnable()
     {
         mapManager = transform.parent.Find("Robo World").GetComponent<MapManager>();
+        gimbalCoverRenderer = transform.Find("Gimbal/Gimbal Head/Gimbal Cover").GetComponent<MeshRenderer>();
         reloadCount = 2;
         reloading = false;
         isAttacked = false;
@@ -46,15 +48,24 @@ public class RoboState : MonoBehaviour
     }
     private void DepenseBuff()
     {
-        if (isShield) damage = 25f;
-        else damage = 50f;
+        if (isShield)
+        {
+            Debug.Log("Shield On");
+            damage = 25f;
+            gimbalCoverRenderer.material = (Material)Resources.Load("Shield On");
+        }
+        else
+        {
+            damage = 50f;
+            gimbalCoverRenderer.material = (Material)Resources.Load("Robot Base");
+        }
     }
     private void ShieldUpdate()
     {
         redShieldOn = mapManager.redShieldOn;
         blueShieldOn = mapManager.blueShieldOn;
         redShieldOnTime = mapManager.redShieldOnTime;
-        blueShieldOnTime = mapManager.blueShieldOnTime;
+        blueShieldOnTime = mapManager.blueShieldOnTime;        
         if (transform.tag == "redAgent")
         {
             isShield = redShieldOn;

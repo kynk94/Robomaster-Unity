@@ -23,7 +23,7 @@ public class MapReload : MonoBehaviour
     {
         if (reloadTriggerTime >= 0.5f)
         {
-            reloadTriggerTime = 0f;            
+            reloadTriggerTime = 0f;
         }
     }
 
