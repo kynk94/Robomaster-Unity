@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class RoboState : MonoBehaviour
 {
+    private GameObject roboWorld;
+    private GameObject mapReload;
     private MapManager mapManager;
     private RoboShooter roboShooter;
     private Transform vGimbalPivot;
     private MeshRenderer gimbalCoverRenderer;
 
+    public int ammoRemain { get; private set; }
     public float health { get; private set; }
     public float damage { get; private set; }
     public float fireSpeed { get; private set; }
@@ -24,8 +27,12 @@ public class RoboState : MonoBehaviour
     public float blueShieldOnTime { get; private set; }
     private void OnEnable()
     {
-        mapManager = transform.parent.Find("Robo World").GetComponent<MapManager>();
+        roboWorld = transform.parent.Find("Robo World").gameObject;
+        if (transform.tag == "redAgent") mapReload = roboWorld.transform.Find("Red Zone/Red Reload").gameObject;
+        else if (transform.tag == "blueAgent") mapReload = roboWorld.transform.Find("Blue Zone/Blue Reload").gameObject;
+        mapManager = roboWorld.GetComponent<MapManager>();
         gimbalCoverRenderer = transform.Find("Gimbal/Gimbal Head/Gimbal Cover").GetComponent<MeshRenderer>();
+        ammoRemain = 40;
         reloadCount = 2;
         reloading = false;
         isAttacked = false;
@@ -41,16 +48,34 @@ public class RoboState : MonoBehaviour
     private void Update()
     {
         ShieldUpdate();
+        IsAllyReloading();
     }
     public void ResetReloadCount()
     {
         reloadCount = 2;
     }
+    public void UseReloadCount()
+    {
+        reloading = true;
+        reloadCount--;
+    }
+    public void ReloadingToFalse()
+    {
+        reloading = false;
+    }
+    private void IsAllyReloading()
+    {
+        if (!reloading) isAllyReloading = mapReload.GetComponent<MapReload>().countTrigger;
+    }
+    public void AmmoUpdate()
+    {
+        ammoRemain = GetComponent<RoboShooter>().ammoRemain;
+    }
+    
     private void DepenseBuff()
     {
         if (isShield)
         {
-            Debug.Log("Shield On");
             damage = 25f;
             gimbalCoverRenderer.material = (Material)Resources.Load("Shield On");
         }
@@ -78,6 +103,7 @@ public class RoboState : MonoBehaviour
         }
         DepenseBuff();
     }
+    
     private void OnTriggerEnter(Collider other)
     {
 

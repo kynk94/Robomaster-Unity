@@ -23,7 +23,6 @@ public class MapManager : MonoBehaviour
     private void OnEnable()
     {
         roboStates = (RoboState[])FindObjectsOfType(typeof(RoboState));
-        
         redShieldOn = false;
         blueShieldOn = false;
         redReloadOn = false;
@@ -81,40 +80,6 @@ public class MapManager : MonoBehaviour
                 blueShieldOn = false;
                 blueShieldOnTime = 0f;
             }
-        }
-    }
-
-    public void ReloadUse(string team)
-    {
-        if (team == "redReload")
-        {
-            if (redReloadCount > 0)
-            {
-                redReloadOn = true;
-                redReloadOnTime = 0f;
-                redReloadCount--;
-            }
-        }
-        else if (team == "blueReload")
-        {
-            if (blueReloadCount > 0)
-            {
-                blueReloadOn = true;
-                blueReloadOnTime = 0f;
-                blueReloadCount--;
-            }
-        }
-    }
-    private void MapReloadOn()
-    {
-        if (redReloadOn)
-        {
-            if (redReloadOnTime <= 3f)
-            {
-                redReloadOnTime += Time.deltaTime;
-            }
-            
-            
         }
     }
 

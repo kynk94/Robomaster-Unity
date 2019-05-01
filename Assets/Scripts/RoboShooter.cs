@@ -17,12 +17,13 @@ public class RoboShooter : MonoBehaviour
     private float heatTime = 0f;
 
     private float fireSpeed;
-    public int ammoRemain = 40; // 남은 전체 탄알
-    public int maxAmmoCapacity = 200; // 탄창 용량
+    public int ammoRemain { get; private set; } // 남은 전체 탄알
+    private int maxAmmoCapacity = 200; // 탄창 용량
 
     private void Start()
     {
         roboState = GetComponent<RoboState>();
+        ammoRemain = roboState.ammoRemain;
         moveInput = GetComponent<MoveInput>();
         vGimbalPivot = transform.Find("Gimbal/V Gimbal Pivot").transform;
     }
@@ -32,6 +33,7 @@ public class RoboShooter : MonoBehaviour
         fireSpeed = roboState.fireSpeed;
         Fire();
         Reload();
+        roboState.AmmoUpdate();
         //Debug.Log(ammoRemain);
     }
     private void Fire()
@@ -60,7 +62,7 @@ public class RoboShooter : MonoBehaviour
             currentHeat += bullet.bulletSpeed;
             if (currentHeat > maxHeat) currentHeat = maxHeat;
             ammoRemain--;
-        }
+        }        
     }
     private void Reload()
     {
@@ -70,5 +72,9 @@ public class RoboShooter : MonoBehaviour
             if (ammoRemain > maxAmmoCapacity) ammoRemain = maxAmmoCapacity;
         }
     }
-
+    public void AmmoPlus()
+    {
+        ammoRemain++;
+        if (ammoRemain > maxAmmoCapacity) ammoRemain = maxAmmoCapacity;
+    }
 }

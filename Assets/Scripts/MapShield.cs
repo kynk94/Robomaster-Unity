@@ -5,13 +5,13 @@ using UnityEngine;
 public class MapShield : MonoBehaviour
 {
     private MapManager mapManager;
-    private new Collider collider;
+    private Collider sensorCollider;
     private float shieldTriggerTime = 0f;
 
     void OnEnable()
     {
         mapManager = transform.parent.parent.GetComponent<MapManager>();        
-        collider = GetComponent<Collider>();
+        sensorCollider = GetComponent<Collider>();
     }
 
     void Update()
@@ -32,8 +32,8 @@ public class MapShield : MonoBehaviour
     {
         if (other.tag=="shieldSensor")
         {
-            Vector3 min = collider.bounds.min + other.bounds.extents;
-            Vector3 max = collider.bounds.max - other.bounds.extents;
+            Vector3 min = sensorCollider.bounds.min + other.bounds.extents;
+            Vector3 max = sensorCollider.bounds.max - other.bounds.extents;
             // collider 안에 완벽히 들어왔을 경우에만 체크한다.
             // 밖으로 나가면 쉴드 발동 시간을 초기화
             if (min.x <= other.bounds.center.x && other.bounds.center.x <= max.x &&
