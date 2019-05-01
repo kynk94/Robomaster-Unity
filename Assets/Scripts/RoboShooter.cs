@@ -34,7 +34,6 @@ public class RoboShooter : MonoBehaviour
         Fire();
         Reload();
         roboState.AmmoUpdate();
-        //Debug.Log(ammoRemain);
     }
     private void Fire()
     {

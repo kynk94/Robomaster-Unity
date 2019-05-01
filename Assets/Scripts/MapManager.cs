@@ -4,29 +4,22 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    private RoboState[] roboStates;
-    private float chargeTime = 0f;
+    private RoboState[] roboStates;    
     private int timeCount = 0;
+    public float chargeTime { get; private set; }
     public int redShieldCount { get; private set; }
     public int blueShieldCount { get; private set; }
-    public int redReloadCount { get; private set; }
-    public int blueReloadCount { get; private set; }
     public float redShieldOnTime { get; private set; }
     public float blueShieldOnTime { get; private set; }
     public bool redShieldOn { get; private set; }
     public bool blueShieldOn { get; private set; }
-    public float redReloadOnTime { get; private set; }
-    public float blueReloadOnTime { get; private set; }
-    public bool redReloadOn { get; private set; }
-    public bool blueReloadOn { get; private set; }
 
     private void OnEnable()
     {
         roboStates = (RoboState[])FindObjectsOfType(typeof(RoboState));
+        chargeTime = 0f;
         redShieldOn = false;
         blueShieldOn = false;
-        redReloadOn = false;
-        blueReloadOn = false;
         redShieldCount = 2;
         blueShieldCount = 2;
     }
@@ -35,8 +28,7 @@ public class MapManager : MonoBehaviour
     {        
         Charge();
         MapShieldOn();
-        //Debug.Log("RedShield : " + redShieldOn.ToString());
-        //Debug.Log("BlueShield : " + blueShieldOn.ToString());
+        ShieldMaterialChange();
     }    
 
     public void ShieldUse(string team)
@@ -82,7 +74,19 @@ public class MapManager : MonoBehaviour
             }
         }
     }
-
+    private void ShieldMaterialChange()
+    {
+        if (redShieldCount == 0)
+        {
+            transform.Find("Red Zone/Red Shield").GetComponent<MeshRenderer>().material =
+                (Material)Resources.Load("Red Shield Off");
+        }
+        if (blueShieldCount == 0)
+        {
+            transform.Find("Blue Zone/Blue Shield").GetComponent<MeshRenderer>().material =
+                (Material)Resources.Load("Blue Shield Off");
+        }
+    }
     private void Charge()
     {
         chargeTime += Time.deltaTime;
@@ -91,6 +95,10 @@ public class MapManager : MonoBehaviour
             chargeTime = 0;
             if(timeCount == 0 || timeCount ==1)
             {
+                transform.Find("Red Zone/Red Shield").GetComponent<MeshRenderer>().material =
+                    (Material)Resources.Load("Red Shield");
+                transform.Find("Blue Zone/Blue Shield").GetComponent<MeshRenderer>().material =
+                    (Material)Resources.Load("Blue Shield");
                 redShieldCount = 2;
                 blueShieldCount = 2;
                 timeCount++;
