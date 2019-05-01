@@ -18,6 +18,7 @@ TagManager:
   - blueReload
   - blueShield
   - bulletBucket
+  - blueAgent
   layers:
   - Default
   - TransparentFX
