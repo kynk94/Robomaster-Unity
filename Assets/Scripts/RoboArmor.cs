@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class RoboArmor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private RoboState roboState;
+    public string firedRobot { get; private set; }
+    void OnEnable()
     {
-        
+        roboState = transform.parent.parent.GetComponent<RoboState>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
         
+    public void Attacked(string robot)
+    {
+        firedRobot = robot;
+        roboState.ArmorAttacked(tag, firedRobot);
     }
 }

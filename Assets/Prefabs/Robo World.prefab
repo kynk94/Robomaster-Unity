@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 396424666136775377}
   m_Layer: 0
   m_Name: Red Regen (1)
-  m_TagString: Untagged
+  m_TagString: world
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1561935635193519452
 Transform:
@@ -107,8 +107,8 @@ GameObject:
   m_Name: Wall
   m_TagString: wall
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &5754105522488298365
 Transform:
@@ -196,10 +196,10 @@ GameObject:
   - component: {fileID: 1371591683764943275}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: world
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!4 &3358218715559023991
 Transform:
@@ -289,8 +289,8 @@ GameObject:
   m_Name: Wall (6)
   m_TagString: wall
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4998762009398974361
 Transform:
@@ -362,8 +362,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.6, z: 1}
-  m_Center: {x: 0.625, y: 0.1, z: 2}
+  m_Size: {x: 0.25, y: 0.6, z: 2}
+  m_Center: {x: 0.625, y: 0.1, z: 2.5}
 --- !u!1 &1556278894825611032
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,8 +380,8 @@ GameObject:
   m_Name: Wall (2)
   m_TagString: wall
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &5044044681173597275
 Transform:
@@ -471,8 +471,8 @@ GameObject:
   m_Name: Wall (5)
   m_TagString: wall
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4683607874004112756
 Transform:
@@ -557,7 +557,7 @@ GameObject:
   - component: {fileID: 2129715386021481474}
   m_Layer: 0
   m_Name: Blue Zone
-  m_TagString: Untagged
+  m_TagString: world
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -591,7 +591,7 @@ GameObject:
   - component: {fileID: 2129715386800188817}
   m_Layer: 0
   m_Name: Wall Set
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -629,7 +629,7 @@ GameObject:
   - component: {fileID: 2129715386850485416}
   m_Layer: 0
   m_Name: Red Zone
-  m_TagString: Untagged
+  m_TagString: world
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -671,8 +671,8 @@ GameObject:
   m_Name: Wall (7)
   m_TagString: wall
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &6118253931726697913
 Transform:
@@ -744,8 +744,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8.5, y: 2, z: 0.25}
-  m_Center: {x: 0, y: 0.90000004, z: -2.625}
+  m_Size: {x: 8.5, y: 2, z: 1}
+  m_Center: {x: 0, y: 0.90000004, z: -3}
 --- !u!65 &3754298198124104571
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -757,8 +757,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 8.5, y: 2, z: 0.25}
-  m_Center: {x: 0, y: 0.90000004, z: 2.625}
+  m_Size: {x: 8.5, y: 2, z: 1}
+  m_Center: {x: 0, y: 0.90000004, z: 3}
 --- !u!65 &3754298198124104572
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -770,8 +770,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 2, z: 5}
-  m_Center: {x: 4.125, y: 0.90000004, z: 0}
+  m_Size: {x: 1, y: 2, z: 7}
+  m_Center: {x: 4.5, y: 0.90000004, z: 0}
 --- !u!65 &3754298198124104573
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -783,8 +783,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 2, z: 5}
-  m_Center: {x: -4.125, y: 0.90000004, z: 0}
+  m_Size: {x: 1, y: 2, z: 7}
+  m_Center: {x: -4.5, y: 0.90000004, z: 0}
 --- !u!1 &3957792030440256566
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,10 +799,10 @@ GameObject:
   - component: {fileID: 3126239476763427332}
   m_Layer: 0
   m_Name: Blue Regen
-  m_TagString: Untagged
+  m_TagString: world
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &6530837160940275458
 Transform:
@@ -888,12 +888,13 @@ GameObject:
   - component: {fileID: 6194603605338258913}
   - component: {fileID: 3016156103536978142}
   - component: {fileID: 2555510439831853814}
+  - component: {fileID: 1084376833}
   m_Layer: 0
-  m_Name: Blue Shild
-  m_TagString: Untagged
+  m_Name: Blue Shield
+  m_TagString: blueShield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &5744581860302318556
 Transform:
@@ -902,7 +903,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4537583233506749632}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -934,7 +935,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 347f76f70c1177c459d231a8d77b2173, type: 2}
+  - {fileID: 2100000, guid: ef5c198b0b1bc6a44b468fd8384916e8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -965,8 +966,20 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.92, y: 0.6, z: 0.92}
+  m_Size: {x: 1, y: 0.6, z: 1}
   m_Center: {x: -2.3000002, y: 0.3, z: 0.75}
+--- !u!114 &1084376833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537583233506749632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16590430fc95fde43880bb4bb1b992b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5467084912445080626
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,8 +996,8 @@ GameObject:
   m_Name: Wall (3)
   m_TagString: wall
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &6568157759617082883
 Transform:
@@ -1074,8 +1087,8 @@ GameObject:
   m_Name: Wall (4)
   m_TagString: wall
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &8433671688511384173
 Transform:
@@ -1163,10 +1176,10 @@ GameObject:
   - component: {fileID: 4647912890192120472}
   m_Layer: 0
   m_Name: Blue Regen (1)
-  m_TagString: Untagged
+  m_TagString: world
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &6775693160368531388
 Transform:
@@ -1252,12 +1265,13 @@ GameObject:
   - component: {fileID: 810743389906041124}
   - component: {fileID: 8356235548675303013}
   - component: {fileID: 4870531573673150847}
+  - component: {fileID: 70444407}
   m_Layer: 0
-  m_Name: Red Shild
-  m_TagString: Untagged
+  m_Name: Red Shield
+  m_TagString: redShield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2818158557369636180
 Transform:
@@ -1298,7 +1312,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3f6fc8d1525ced84b80c64fca891557e, type: 2}
+  - {fileID: 2100000, guid: 210c6aed54bf7c141852b391c86c4fb9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1329,8 +1343,20 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.92, y: 0.6, z: 0.92}
+  m_Size: {x: 1, y: 0.6, z: 1}
   m_Center: {x: 2.3000002, y: 0.3, z: -0.75}
+--- !u!114 &70444407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6780695309385613131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16590430fc95fde43880bb4bb1b992b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7702728124910591836
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,10 +1371,10 @@ GameObject:
   - component: {fileID: 8605203197595625834}
   m_Layer: 0
   m_Name: Red Regen
-  m_TagString: Untagged
+  m_TagString: world
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &4203208034099305172
 Transform:
@@ -1431,9 +1457,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6410012133015549587}
+  - component: {fileID: 1832036153}
+  - component: {fileID: 1832036152}
   m_Layer: 0
   m_Name: Robo World
-  m_TagString: Untagged
+  m_TagString: world
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1456,6 +1484,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1832036153
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975780150912681088}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1832036152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7975780150912681088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 531124389d0eacb46b02196ca46d595d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8334368553159216245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,12 +1524,14 @@ GameObject:
   - component: {fileID: 1606515875901441106}
   - component: {fileID: 1859347206614665762}
   - component: {fileID: 7937564479732529729}
+  - component: {fileID: 773525717}
+  - component: {fileID: 773525716}
   m_Layer: 0
   m_Name: Red Reload
-  m_TagString: Untagged
+  m_TagString: redReload
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2466266367065540935
 Transform:
@@ -1545,8 +1603,33 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.017, y: 0.6, z: 0.017}
-  m_Center: {x: 0, y: 0.3, z: 1.9}
+  m_Size: {x: 0.017, y: 0.3, z: 0.017}
+  m_Center: {x: 0, y: 0.4, z: 1.9}
+--- !u!65 &773525717
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8334368553159216245}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.2, z: 1}
+  m_Center: {x: 0, y: 0.1, z: 2}
+--- !u!114 &773525716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8334368553159216245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbb6dca9f32a664f95f7ffa4302f818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8557320856988575171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,8 +1646,8 @@ GameObject:
   m_Name: Wall (1)
   m_TagString: wall
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &6902127205955489182
 Transform:
@@ -1636,8 +1719,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.6, z: 1}
-  m_Center: {x: -0.625, y: 0.1, z: -2}
+  m_Size: {x: 0.25, y: 0.6, z: 2}
+  m_Center: {x: -0.625, y: 0.1, z: -2.5}
 --- !u!1 &9158479101491077631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,12 +1733,14 @@ GameObject:
   - component: {fileID: 6742975059391948760}
   - component: {fileID: 4275407335151739281}
   - component: {fileID: 7104200694709360587}
+  - component: {fileID: 1058780063}
+  - component: {fileID: 1058780062}
   m_Layer: 0
   m_Name: Blue Reload
-  m_TagString: Untagged
+  m_TagString: blueReload
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &7832346044824698169
 Transform:
@@ -1727,5 +1812,30 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.017, y: 0.6, z: 0.017}
-  m_Center: {x: 0, y: 0.3, z: -1.9}
+  m_Size: {x: 0.017, y: 0.3, z: 0.017}
+  m_Center: {x: 0, y: 0.4, z: -1.9}
+--- !u!65 &1058780063
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158479101491077631}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.2, z: 1}
+  m_Center: {x: 0, y: 0.1, z: -2}
+--- !u!114 &1058780062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9158479101491077631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbb6dca9f32a664f95f7ffa4302f818, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

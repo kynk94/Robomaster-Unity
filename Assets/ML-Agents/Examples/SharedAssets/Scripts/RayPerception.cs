@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,5 +21,9 @@ public abstract class RayPerception : MonoBehaviour {
 	{
 		return degree * Mathf.PI / 180f;
 	}
-	
+
+    internal IEnumerable<float> Perceive(float rayDistance, float[] rayAngles, string[] detectableObjects)
+    {
+        throw new NotImplementedException();
+    }
 }

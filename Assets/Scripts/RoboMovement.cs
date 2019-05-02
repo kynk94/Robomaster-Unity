@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class RoboMovement : MonoBehaviour
 {
     public float moveSpeed = 4f;
     public float rotateSpeed = 240f;
 
+    private Vector3 firstPosition;
+    private Vector3 firstRotation;
     private Vector3 moveDistance;
     private float gimbalRotateSpeed = 1.5f;
     private float hMax = 90f;
@@ -21,10 +23,11 @@ public class RoboMovement : MonoBehaviour
     private Rigidbody roboRigidbody;
     private Rigidbody gimbalRigidbody;
     private Rigidbody gimbalHeadRigidbody;
+    private NavMeshAgent pathFinder;
 
     private bool doesWobble = true;
     private bool wobbleDir = true;
-    
+    public bool realWobble { get; private set; }
     private float wobble = 0f;
     private float wobbleMax = 40f;
     private float wSign;
@@ -32,8 +35,18 @@ public class RoboMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        moveSpeed = 4f;
-        rotateSpeed = 240f;
+        if (moveInput.manual)
+        {
+            moveSpeed = 4f;
+            rotateSpeed = 240f;
+        }
+        else
+        {
+            moveSpeed = 2f;
+            rotateSpeed = 240f;
+        }
+        firstPosition = transform.position;
+        firstRotation = transform.eulerAngles;
 
         moveInput = GetComponent<MoveInput>();
         
@@ -47,21 +60,27 @@ public class RoboMovement : MonoBehaviour
         roboRigidbody = GetComponent<Rigidbody>();
         gimbalRigidbody = gimbalObject.GetComponent<Rigidbody>();
         gimbalHeadRigidbody = gimbalHeadObject.GetComponent<Rigidbody>();
+        pathFinder = GetComponent<NavMeshAgent>();
+        pathFinder.enabled = false;
+        pathFinder.speed = moveSpeed;
+        pathFinder.angularSpeed = rotateSpeed;
     }
 
     private void FixedUpdate()
     {
-        
         Rotate();
         GimbalRotate();
+        realWobble = doesWobble && moveInput.wobbleInput;
         // Wobble은 조건을 따진다.
-        if (doesWobble && moveInput.wobbleInput) Wobble(wobbleSpeed * Time.deltaTime);
+        if (realWobble) Wobble(wobbleSpeed * Time.deltaTime);
         else
         {
             wobble = 0;
             fixedPivot.rotation = Quaternion.Euler(transform.eulerAngles);
         }
-        Move();    
+        Move();
+        //NavReload();
+        //GoReload();
     }
     
     public void Wobble(float wSpeed)
@@ -143,7 +162,36 @@ public class RoboMovement : MonoBehaviour
         gimbalHeadRigidbody.transform.RotateAround(vGimbalPivot.position, vGimbalPivot.right, vturn);
         vGimbalPivot.rotation *= Quaternion.Euler(vturn, 0f, 0f);
     }
-
+    public void NavReload()
+    {
+        Vector3 destination = Vector3.zero;
+        if (tag == "redAgent")
+        {
+            destination = transform.parent.Find("Robo World/Red Zone/Red Reload").GetComponent<MapReload>().center;
+        }
+        else if (tag == "blueAgent")
+        {
+            destination = transform.parent.Find("Robo World/Blue Zone/Blue Reload").GetComponent<MapReload>().center;
+        }
+        else return;
+        pathFinder.enabled = true;
+        pathFinder.SetDestination(destination);
+    }
+    public void GoReload()
+    {
+        Vector3 destination = Vector3.zero;
+        if (tag == "redAgent")
+        {
+            destination = transform.parent.Find("Robo World/Red Zone/Red Reload").GetComponent<MapReload>().center;
+        }
+        else if (tag == "blueAgent")
+        {
+            destination = transform.parent.Find("Robo World/Blue Zone/Blue Reload").GetComponent<MapReload>().center;
+        }
+        else return;
+        roboRigidbody.MovePosition(destination);
+        roboRigidbody.rotation = Quaternion.Euler(firstRotation);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "wall")

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour
 {
-    private RoboState[] roboStates;    
+    private List<RoboState> roboStates = new List<RoboState>();    
     private int timeCount = 0;
     public float chargeTime { get; private set; }
     public int redShieldCount { get; private set; }
@@ -16,15 +16,38 @@ public class MapManager : MonoBehaviour
 
     private void OnEnable()
     {
-        roboStates = (RoboState[])FindObjectsOfType(typeof(RoboState));
+        FindRoboStates();
         chargeTime = 0f;
         redShieldOn = false;
         blueShieldOn = false;
         redShieldCount = 2;
         blueShieldCount = 2;
     }
-        
-    private void Update()
+    private void FindRoboStates()
+    {
+        if (transform.parent.Find("Agent Red 1") != null)
+        {
+            roboStates.Add(transform.parent.Find("Agent Red 1").GetComponent<RoboState>());
+        }
+        if (transform.parent.Find("Agent Red 2") != null)
+        {
+            roboStates.Add(transform.parent.Find("Agent Red 2").GetComponent<RoboState>());
+        }
+        if (transform.parent.Find("Agent Blue 1") != null)
+        {
+            roboStates.Add(transform.parent.Find("Agent Blue 1").GetComponent<RoboState>());
+        }
+        if (transform.parent.Find("Agent Blue 2") != null)
+        {
+            roboStates.Add(transform.parent.Find("Agent Blue 2").GetComponent<RoboState>());
+        }
+        //foreach (RoboState roboState in roboStates)
+        //{
+        //    print(roboState.name);
+        //}
+    }
+
+    private void FixedUpdate()
     {        
         Charge();
         MapShieldOn();

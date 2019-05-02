@@ -14,6 +14,7 @@ public class MapReload : MonoBehaviour
     private float reloadTriggerTime = 0f;
     private int plusAmmo = 0;
     private string opponentAgent;
+    public Vector3 center { get; private set; }
 
     void OnEnable()
     {
@@ -24,6 +25,7 @@ public class MapReload : MonoBehaviour
             if (myCollider.bounds.size.x > 0.5) sensorCollider = myCollider;
             else bucketCollider = myCollider;
         }
+        center = sensorCollider.bounds.center;
         sensorOn = false;
         countTrigger = false;
         if (transform.tag == "redReload") opponentAgent = "blueAgent";

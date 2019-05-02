@@ -11,7 +11,7 @@ public class RoboShooter : MonoBehaviour
     private Transform vGimbalPivot;
     private float maxHeat = 360f;
     private float decHeat = 120f;
-    private float currentHeat = 0f;
+    public float currentHeat { get; private set; }
     private float fireRate = 0.1f; // 초당 10발 발사 가능
     private float timeAfterFire = 0f;
     private float heatTime = 0f;
@@ -20,15 +20,16 @@ public class RoboShooter : MonoBehaviour
     public int ammoRemain { get; private set; } // 남은 전체 탄알
     private int maxAmmoCapacity = 200; // 탄창 용량
 
-    private void Start()
+    private void OnEnable()
     {
+        currentHeat = 0f;
         roboState = GetComponent<RoboState>();
         ammoRemain = roboState.ammoRemain;
         moveInput = GetComponent<MoveInput>();
         vGimbalPivot = transform.Find("Gimbal/V Gimbal Pivot").transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         fireSpeed = roboState.fireSpeed;
         Fire();
@@ -56,6 +57,7 @@ public class RoboShooter : MonoBehaviour
             GameObject firedBullet =
                 Instantiate(bulletPrefab, vGimbalPivot.position, vGimbalPivot.rotation);
             Bullet bullet = firedBullet.GetComponent<Bullet>();
+            bullet.GetFiredRobot(name, gameObject);            
             bullet.bulletSpeed = fireSpeed;
             firedBullet.transform.LookAt(vGimbalPivot);
             currentHeat += bullet.bulletSpeed;
