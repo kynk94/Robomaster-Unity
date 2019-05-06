@@ -19,6 +19,8 @@ TagManager:
   - blueShield
   - bulletBucket
   - blueAgent
+  - bullet
+  - world
   layers:
   - Default
   - TransparentFX
