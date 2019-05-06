@@ -10,7 +10,7 @@ public class RoboAgent : Agent
 {
     private RoboState roboState;
     private RoboMovement roboMovement;
-    private RayPerception rayPer;
+    private RoboRayPerception rayPer;
     private string myTeam;
     private string enemyTeam;
     private string myShield;
@@ -18,7 +18,7 @@ public class RoboAgent : Agent
     private string myReload;
     private string enemyReload;
     public bool manual;
-    public bool useVectorObs;
+    public bool useRayPerception;
     public Vector3 direction { get; private set; }
     public float rotate { get; private set; }
 
@@ -29,7 +29,25 @@ public class RoboAgent : Agent
         base.InitializeAgent();
         roboState = GetComponent<RoboState>();
         roboMovement = GetComponent<RoboMovement>();
-        rayPer = GetComponent<RayPerception>();
+        rayPer = GetComponent<RoboRayPerception>();
+        if (gameObject.CompareTag("redAgent"))
+        {
+            myTeam = tag;
+            myShield = "redShield";
+            myReload = "redReload";
+            enemyTeam = "blueAgent";
+            enemyShield = "blueShield";
+            enemyReload = "blueReload";
+        }
+        else if (gameObject.CompareTag("blueAgent"))
+        {
+            myTeam = tag;
+            myShield = "blueShield";
+            myReload = "blueReload";
+            enemyTeam = "redAgent";
+            enemyShield = "redShield";
+            enemyReload = "redReload";
+        }
     }
 
     public override void CollectObservations()
@@ -58,40 +76,23 @@ public class RoboAgent : Agent
         AddVectorObs(roboState.rearAttacked);
         AddVectorObs(roboState.rightAttacked);
         AddVectorObs(roboState.isCollide); // 23개
-        if (useVectorObs)
+        if (useRayPerception)
         {
             GetRay();
         }
     }
     public void GetRay()
     {
-        if (gameObject.CompareTag("redAgent"))
-        {
-            myTeam = tag;
-            myShield = "redShield";
-            myReload = "redReload";
-            enemyTeam = "blueAgent";
-            enemyShield = "blueShield";
-            enemyReload = "blueReload";
-        }
-        else if (gameObject.CompareTag("blueAgent"))
-        {
-            myTeam = tag;
-            myShield = "blueShield";
-            myReload = "blueReload";
-            enemyTeam = "redAgent";
-            enemyShield = "redShield";
-            enemyReload = "redReload";
-        }
-        const float rayDistance = 3f;
-        float[] rayAngles = { 20f, 90f, 160f, 45f, 135f, 70f, 110f };
-        string[] detectableObjects = { myTeam, myShield, myReload, enemyTeam, enemyShield, enemyReload, "wall" };
-        List<float> ray = rayPer.Perceive(rayDistance, rayAngles, detectableObjects, 0.2f, 0.2f);
-        AddVectorObs(ray);
-        for(int i=0; i<ray.Count;i++)
-        {
-            print("i"+i.ToString()+" "+ray[i].ToString());
-        }
+        const float rayDistance = 4f;
+        //float[] rayAngles = { 20f, 45f, 70f, 90f, 110f, 135f, 160f };
+        float[] rayOnAngles = { 90f };
+        float[] rayUnderAngles = { 20f, 45f, 70f, 90f, 110f, 135f, 160f };
+        string[] detectableOnFloor = { myTeam, enemyTeam, "wall" };
+        string[] detectableUnderFloor = { myShield, myReload, enemyShield, enemyReload };
+        List<float> rayOnFloor = rayPer.Perceive(rayDistance, rayOnAngles, detectableOnFloor, 0.1f, 0.1f);
+        AddVectorObs(rayOnFloor);
+        List<float> rayUnderFloor = rayPer.Perceive(rayDistance, rayUnderAngles, detectableUnderFloor, -0.3f, -0.3f);        
+        AddVectorObs(rayUnderFloor);
     }
     public override void AgentAction(float[] vectorAction, string textAction)
     {

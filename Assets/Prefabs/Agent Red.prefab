@@ -22319,7 +22319,7 @@ GameObject:
   - component: {fileID: 2439376156459363237}
   - component: {fileID: 1971061640}
   - component: {fileID: 1971061652}
-  - component: {fileID: 3065138976916710812}
+  - component: {fileID: 7734729442694533831}
   m_Layer: 14
   m_Name: Agent Red
   m_TagString: redAgent
@@ -22554,7 +22554,7 @@ MonoBehaviour:
     numberOfActionsBetweenDecisions: 1
   manual: 0
   useVectorObs: 1
---- !u!114 &3065138976916710812
+--- !u!114 &7734729442694533831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22563,7 +22563,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2439376156459363245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb172294dbbcc408286b156a2c4b553c, type: 3}
+  m_Script: {fileID: 11500000, guid: 365dc9d762b42cc40a79a50ec4d0561a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2439376156462109587

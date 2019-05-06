@@ -42,7 +42,7 @@ public class RoboMovement : MonoBehaviour
         }
         else
         {
-            moveSpeed = 2f;
+            moveSpeed = 4f;
             rotateSpeed = 240f;
         }
         firstPosition = transform.position;
