@@ -40,7 +40,7 @@ public class MapShield : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform.GetComponent<RoboState>().dead) return;
+        if (other.transform.parent.GetComponent<RoboState>().dead) return;
         if (rewardTrigger)
         {
             rewardTriggerTime = 0f;
