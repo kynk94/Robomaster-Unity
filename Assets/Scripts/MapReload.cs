@@ -48,7 +48,7 @@ public class MapReload : MonoBehaviour
         if (other.transform.tag == opponentAgent &&
             rewardTrigger)
         {
-            other.transform.GetComponent<RoboAgent>().OnEnemyReloadzone();
+            other.transform.parent.GetComponent<RoboAgent>().OnEnemyReloadzone();
             return;
         }
         if (other.tag == "shieldSensor")

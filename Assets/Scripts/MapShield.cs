@@ -32,8 +32,8 @@ public class MapShield : MonoBehaviour
         if (shieldTriggerTime >= 5f)
         {
             shieldTriggerTime = 0f;
-            if (other.transform.tag == opponentAgent) other.transform.GetComponent<RoboAgent>().TriggerEnemyShield();
-            else other.transform.GetComponent<RoboAgent>().TriggerMyShield();
+            if (other.transform.tag == opponentAgent) other.transform.parent.GetComponent<RoboAgent>().TriggerEnemyShield();
+            else other.transform.parent.GetComponent<RoboAgent>().TriggerMyShield();
             // MapManager에서 해당 팀 실드 발동
             mapManager.ShieldUse(gameObject.tag);
         }
@@ -44,8 +44,8 @@ public class MapShield : MonoBehaviour
         if (rewardTrigger)
         {
             rewardTriggerTime = 0f;
-            if (other.transform.tag == opponentAgent) other.transform.GetComponent<RoboAgent>().OnEnemyShieldzone();
-            else other.transform.GetComponent<RoboAgent>().OnMyShieldzone();
+            if (other.transform.tag == opponentAgent) other.transform.parent.GetComponent<RoboAgent>().OnEnemyShieldzone();
+            else other.transform.parent.GetComponent<RoboAgent>().OnMyShieldzone();
         }
         if (other.tag=="shieldSensor")
         {
