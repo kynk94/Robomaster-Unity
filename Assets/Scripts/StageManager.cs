@@ -45,21 +45,23 @@ public class StageManager : MonoBehaviour
     {
         restart = Input.GetButtonDown(restartButtonName);
         Restart(restart);
+        if (agents[0].GetComponent<RoboState>().dead && agents[1].GetComponent<RoboState>().dead) { Restart(true); }
+        if (agents[2].GetComponent<RoboState>().dead && agents[3].GetComponent<RoboState>().dead) { Restart(true); }
     }
     public void Restart(bool reset)
     {
-        if (reset) {            
+        if (reset)
+        {
             for (int idx = 0; idx < agents.Count; idx++)
             {
-                agents[idx].SetActive(false);
-                agents[idx].SetActive(true);
+                agents[idx].GetComponent<RoboState>().ResetState();
                 agents[idx].transform.position = firstPosition[idx];
                 agents[idx].transform.rotation = Quaternion.Euler(firstRotation[idx]);
                 agents[idx].transform.Find("Gimbal").rotation = Quaternion.Euler(firstGimbalRotation[idx]);
+                agents[idx].GetComponent<RoboAgent>().Done();
                 //RoboState agentState = agents[idx].GetComponent<RoboState>();
             }
-            roboWorld.SetActive(false);
-            roboWorld.SetActive(true);
+            roboWorld.GetComponent<MapManager>().ResetWorld();
         }
     }
 }

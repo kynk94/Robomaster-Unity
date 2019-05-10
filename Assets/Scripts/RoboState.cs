@@ -77,18 +77,46 @@ public class RoboState : MonoBehaviour
         dead = false;
         amIShootDead = false;
         isWobble = false;
-        chargeTime = 0f;        
+        chargeTime = 0f;
         damage = 50f;
-        fireSpeed = 15f;        
+        fireSpeed = 15f;
     }
-
+    public void ResetState()
+    {
+        GetComponent<MoveInput>().enabled = true;
+        GetComponent<RoboMovement>().enabled = true;
+        GetComponent<RoboShooter>().enabled = true;
+        healthSlider.gameObject.SetActive(true);
+        health = 2000f;
+        healthSlider.value = health;
+        ammoRemain = 40;
+        reloadCount = 2;
+        shieldCount = 2;
+        enemyShieldCount = 2;
+        currentHeat = 0f;
+        reloading = false;
+        isAttacked = false;
+        isShield = false;
+        isEnemyShield = false;
+        frontAttacked = false;
+        leftAttacked = false;
+        rearAttacked = false;
+        rightAttacked = false;
+        isCollide = false;
+        dead = false;
+        amIShootDead = false;
+        isWobble = false;
+        chargeTime = 0f;
+        damage = 50f;
+        fireSpeed = 15f;
+    }
     private void Update()
     {
         ShieldUpdate();
         IsAllyReloading();
         AllyDeadCheck();
         collideTimer += Time.deltaTime;
-        hitTime += Time.deltaTime;
+        hitTimer += Time.deltaTime;
         if (collideTimer > collideTime)
         {
             canCollide = true;
@@ -183,6 +211,7 @@ public class RoboState : MonoBehaviour
     }
     public void ArmorAttacked(string armor, string firedRobot)
     {
+        Debug.Log(health.ToString() + "\t" + armor);
         if (canHit)
         {
             if (armor == "Front Armor")
@@ -214,11 +243,6 @@ public class RoboState : MonoBehaviour
             roboAgent.Attacked();
             canHit = false;
         }
-    }
-
-    private void AttakedReset()
-    {
-        
     }
     
     public void Dead()

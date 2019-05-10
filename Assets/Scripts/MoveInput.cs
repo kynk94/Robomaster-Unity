@@ -72,7 +72,12 @@ public class MoveInput : MonoBehaviour
         }
         else
         {
+            if (roboAgent.fire > 0.5) fire = true;
+            else fire = false;
+            if (roboAgent.agentWobble > 0.5) wobbleInput = true;
+            else wobbleInput = false;
             direction = roboAgent.direction;
+            rotate = roboAgent.rotate;
         }
         if (direction.magnitude >= 1)
         {

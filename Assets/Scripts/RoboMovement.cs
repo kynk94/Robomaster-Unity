@@ -24,17 +24,19 @@ public class RoboMovement : MonoBehaviour
     private Rigidbody gimbalRigidbody;
     private Rigidbody gimbalHeadRigidbody;
     private NavMeshAgent pathFinder;
-
+    private RoboAgent roboAgent;
     private bool doesWobble = true;
     private bool wobbleDir = true;
     public bool realWobble { get; private set; }
     private float wobble = 0f;
     private float wobbleMax = 40f;
-    private float wSign;
+    private float wSign = 0f;
     private float wobbleSpeed = 180f;
 
     private void OnEnable()
     {
+        moveInput = GetComponent<MoveInput>();
+        roboAgent = GetComponent<RoboAgent>();
         if (moveInput.manual)
         {
             moveSpeed = 4f;
@@ -47,8 +49,6 @@ public class RoboMovement : MonoBehaviour
         }
         firstPosition = transform.position;
         firstRotation = transform.eulerAngles;
-
-        moveInput = GetComponent<MoveInput>();
         
         gimbalObject = transform.Find("Gimbal").gameObject;
         gimbalHeadObject = gimbalObject.transform.Find("Gimbal Head").gameObject;
@@ -69,39 +69,52 @@ public class RoboMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Rotate();
-        GimbalRotate();
+        //GimbalRotate();
+        AgentGimbal(roboAgent.rayObject);
         realWobble = doesWobble && moveInput.wobbleInput;
         // Wobble은 조건을 따진다.
         if (realWobble) Wobble(wobbleSpeed * Time.deltaTime);
         else
         {
-            wobble = 0;
+            wobble = 0f;
             fixedPivot.rotation = Quaternion.Euler(transform.eulerAngles);
         }
         Move();
+        OverTurn();
         //NavReload();
         //GoReload();
+    }
+    private void OverTurn()
+    {
+        //Debug.Log(name + "\t" + transform.eulerAngles.ToString());
+        Vector3 currentAngle = transform.eulerAngles;
+        if (currentAngle.x > 180f) currentAngle.x -= 360f;
+        if (currentAngle.z > 180f) currentAngle.z -= 360f;
+        if (Mathf.Abs(currentAngle.x) > 40f || Mathf.Abs(currentAngle.z) > 40f)
+        {
+            roboRigidbody.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
+        }
     }
     
     public void Wobble(float wSpeed)
     {
+        float angle = Vector3.Angle(transform.forward, fixedPivot.forward);
+        if (Vector3.Cross(transform.forward, fixedPivot.forward).y > 0) angle *= -1;
         if (wobbleDir)
         {
-            wobble += wSpeed;
-            wSign = 1f;
-            if (wobble >= wobbleMax)
+            wSign += 0.2f;
+            if (wSign >= 1f) wSign = 1f;
+            if (angle >= wobbleMax)
             {
-                wobble = wobbleMax;
                 wobbleDir = false;
             }
         }
         else
         {
-            wobble -= wSpeed;
-            wSign = -1f;
-            if (wobble <= -wobbleMax)
+            wSign -= 0.2f;
+            if (wSign <= -1f) wSign = -1f;
+            if (angle <= -wobbleMax)
             {
-                wobble = -wobbleMax;
                 wobbleDir = true;
             }
         }
@@ -135,6 +148,7 @@ public class RoboMovement : MonoBehaviour
     
     public void GimbalRotate()
     {
+        if (!moveInput.manual) return;
         float hturn = moveInput.hGimbalRotate * gimbalRotateSpeed * Time.deltaTime;
         float vturn = moveInput.vGimbalRotate * gimbalRotateSpeed * Time.deltaTime;
         float hgim = hGimbalPivot.localEulerAngles.y;
@@ -162,6 +176,77 @@ public class RoboMovement : MonoBehaviour
         gimbalHeadRigidbody.transform.RotateAround(vGimbalPivot.position, vGimbalPivot.right, vturn);
         vGimbalPivot.rotation *= Quaternion.Euler(vturn, 0f, 0f);
     }
+
+    public void AgentGimbal(GameObject robot)
+    {
+        if (!roboAgent.enemyDetect) return;
+        if (moveInput.manual) return;
+        if (robot.GetComponent<RoboState>().dead) return;
+        Transform target = transform;
+        List<Transform> armor = new List<Transform>();
+        List<Vector3> armorCenter = new List<Vector3>();
+        List<float> armorDistance = new List<float>();
+        armor.Add(robot.transform.Find("Armor Plate/Front Armor"));
+        armor.Add(robot.transform.Find("Armor Plate/Left Armor"));
+        armor.Add(robot.transform.Find("Armor Plate/Rear Armor"));
+        armor.Add(robot.transform.Find("Armor Plate/Right Armor"));
+        foreach (Transform armorName in armor) armorCenter.Add(armorName.GetComponent<Collider>().bounds.center);
+        foreach (Vector3 center in armorCenter)
+        {
+            armorDistance.Add(Vector2.Distance(new Vector2(transform.position.x, transform.position.z),
+                                               new Vector2(center.x, center.z)));
+        }
+        float disMin = 30f;
+        for(int i=0;i<armorDistance.Count;i++)
+        {
+            if (armorDistance[i] < disMin)
+            {
+                disMin = armorDistance[i];
+                target = armor[i];
+            }
+        }
+        float hgim = hGimbalPivot.localEulerAngles.y;
+        float vgim = vGimbalPivot.localEulerAngles.x;
+        if (hgim > 180f) hgim -= 360f;
+        if (vgim > 180f) vgim -= 360f;
+        //Debug.Log(name+"\t"+target.parent.parent.name + ":" + target.name + "\t(" + target.position.x.ToString() + ",\t" + target.position.z.ToString() + ")");
+        Vector3 hdir = target.GetComponent<Collider>().bounds.center - hGimbalPivot.position;
+        Vector3 hforward = hGimbalPivot.forward;
+        Vector3 vdir = target.GetComponent<Collider>().bounds.center - vGimbalPivot.position;
+        //Vector3 vforward = vGimbalPivot.forward;
+        hdir.y = 0;
+        hforward.y = 0;
+        float hAngle = Vector3.Angle(hdir, hforward);
+        //float vAngle = Vector3.Angle(vdir, vforward);
+        // 외적 값이 양수면 음수로
+        if (Vector3.Cross(hdir, hforward).y > 0) hAngle *= -1;
+        //if (Vector3.Cross(vdir, vforward).x > 0) vAngle *= -1;
+        if (hgim + hAngle >= hMax)
+        {
+            hAngle = hMax - hgim;
+        }
+        else if (hgim + hAngle <= -hMax)
+        {
+            hAngle = -hMax - hgim;
+        }        
+        //if (vgim + vAngle <= -vMaxU)
+        //{
+        //    vAngle = -vMaxU - vgim;
+        //}
+        //else if (vgim + vAngle >= vMaxD)
+        //{
+        //    vAngle = vMaxD - vgim;
+        //}
+        //Debug.Log(hdir.ToString() + "\t" + hAngle.ToString());        
+        //Debug.Log(vdir.ToString() + "\t" + vAngle.ToString());
+        Debug.DrawRay(vGimbalPivot.position, vdir, Color.blue, 0.01f, true);
+        gimbalRigidbody.transform.RotateAround(hGimbalPivot.position, hGimbalPivot.up, hAngle * 20 * Time.deltaTime);
+        hGimbalPivot.rotation *= Quaternion.Euler(0f, hAngle * 20 * Time.deltaTime, 0f);
+        //gimbalHeadRigidbody.transform.RotateAround(vGimbalPivot.position, vGimbalPivot.right, vAngle * 20 * Time.deltaTime);
+        //vGimbalPivot.rotation *= Quaternion.Euler(vAngle * 20 * Time.deltaTime, 0f, 0f);
+        GetComponent<RoboShooter>().AgentFire(target);
+    }
+
     public void NavReload()
     {
         Vector3 destination = Vector3.zero;
@@ -177,6 +262,7 @@ public class RoboMovement : MonoBehaviour
         pathFinder.enabled = true;
         pathFinder.SetDestination(destination);
     }
+
     public void GoReload()
     {
         Vector3 destination = Vector3.zero;
@@ -191,18 +277,5 @@ public class RoboMovement : MonoBehaviour
         else return;
         roboRigidbody.MovePosition(destination);
         roboRigidbody.rotation = Quaternion.Euler(firstRotation);
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "wall")
-        {
-            doesWobble = false;
-            wobble = 0;
-            fixedPivot.rotation = Quaternion.Euler(transform.eulerAngles);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "wall") doesWobble = true;
     }
 }

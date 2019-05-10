@@ -26,13 +26,13 @@ public class RoboShooter : MonoBehaviour
         roboState = GetComponent<RoboState>();
         ammoRemain = roboState.ammoRemain;
         moveInput = GetComponent<MoveInput>();
-        vGimbalPivot = transform.Find("Gimbal/V Gimbal Pivot").transform;
+        vGimbalPivot = transform.Find("Gimbal/V Gimbal Pivot");
     }
 
     private void FixedUpdate()
     {
         fireSpeed = roboState.fireSpeed;
-        Fire();
+        if (moveInput.manual) Fire();
         Reload();
         roboState.AmmoUpdate();
     }
@@ -47,23 +47,44 @@ public class RoboShooter : MonoBehaviour
             currentHeat -= decHeat;
             if (currentHeat < 0) currentHeat = 0f;
         }
-
-        if (moveInput.fire &&
-            timeAfterFire >= fireRate &&
-            currentHeat < maxHeat &&
-            ammoRemain > 0) 
+        if (moveInput.manual)
         {
-            timeAfterFire = 0f;
-            GameObject firedBullet =
-                Instantiate(bulletPrefab, vGimbalPivot.position, vGimbalPivot.rotation);
-            Bullet bullet = firedBullet.GetComponent<Bullet>();
-            bullet.GetFiredRobot(name, gameObject);            
-            bullet.bulletSpeed = fireSpeed;
-            firedBullet.transform.LookAt(vGimbalPivot);
-            currentHeat += bullet.bulletSpeed;
-            if (currentHeat > maxHeat) currentHeat = maxHeat;
-            ammoRemain--;
-        }        
+            if (moveInput.fire &&
+                timeAfterFire >= fireRate &&
+                currentHeat < maxHeat &&
+                ammoRemain > 0)
+            {
+                timeAfterFire = 0f;
+                GameObject firedBullet =
+                    Instantiate(bulletPrefab, vGimbalPivot.position, vGimbalPivot.rotation);
+                Bullet bullet = firedBullet.GetComponent<Bullet>();
+                bullet.GetFiredRobot(name, gameObject);
+                bullet.bulletSpeed = fireSpeed;
+                firedBullet.transform.LookAt(vGimbalPivot);
+                currentHeat += bullet.bulletSpeed;
+                if (currentHeat > maxHeat) currentHeat = maxHeat;
+                ammoRemain--;
+            }
+        }
+        else
+        {
+            if (GetComponent<RoboAgent>().fire > 0.5 &&
+                timeAfterFire >= fireRate &&
+                currentHeat < maxHeat &&
+                ammoRemain > 0)
+            {
+                timeAfterFire = 0f;
+                GameObject firedBullet =
+                    Instantiate(bulletPrefab, vGimbalPivot.position, vGimbalPivot.rotation);
+                Bullet bullet = firedBullet.GetComponent<Bullet>();
+                bullet.GetFiredRobot(name, gameObject);
+                bullet.bulletSpeed = fireSpeed;
+                firedBullet.transform.LookAt(vGimbalPivot);
+                currentHeat += bullet.bulletSpeed;
+                if (currentHeat > maxHeat) currentHeat = maxHeat;
+                ammoRemain--;
+            }
+        }
     }
     private void Reload()
     {
@@ -77,5 +98,35 @@ public class RoboShooter : MonoBehaviour
     {
         ammoRemain++;
         if (ammoRemain > maxAmmoCapacity) ammoRemain = maxAmmoCapacity;
+    }
+
+    public void AgentFire(Transform target)
+    {
+        timeAfterFire += Time.deltaTime;
+        heatTime += Time.deltaTime;
+
+        if (heatTime >= 1f)
+        {
+            heatTime = 0f;
+            currentHeat -= decHeat;
+            if (currentHeat < 0) currentHeat = 0f;
+        }
+        if (moveInput.fire &&
+            timeAfterFire >= fireRate &&
+            currentHeat < maxHeat &&
+            ammoRemain > 0)
+        {
+            timeAfterFire = 0f;
+            GameObject firedBullet =
+                Instantiate(bulletPrefab, vGimbalPivot.position, vGimbalPivot.rotation);
+            Bullet bullet = firedBullet.GetComponent<Bullet>();
+            bullet.GetFiredRobot(name, gameObject);
+            bullet.bulletSpeed = fireSpeed;
+            firedBullet.transform.LookAt(target.GetComponent<Collider>().bounds.center);
+            currentHeat += bullet.bulletSpeed;
+            if (currentHeat > maxHeat) currentHeat = maxHeat;
+            if (!GetComponent<RoboAgent>().ammoInf) ammoRemain--;
+        }
+        GetComponent<RoboAgent>().Attack();
     }
 }

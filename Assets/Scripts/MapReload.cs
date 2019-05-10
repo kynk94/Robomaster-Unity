@@ -12,11 +12,13 @@ public class MapReload : MonoBehaviour
     private bool sensorOn;
     public bool countTrigger { get; private set; }
     private float reloadTriggerTime = 0f;
+    private float rewardTriggerTime = 0f;
+    private bool rewardTrigger=true;
     private int plusAmmo = 0;
     private string opponentAgent;
     public Vector3 center { get; private set; }
 
-    void OnEnable()
+    private void OnEnable()
     {
         mapManager = transform.parent.parent.GetComponent<MapManager>();
         colliders = GetComponents<Collider>();
@@ -32,10 +34,21 @@ public class MapReload : MonoBehaviour
         else if (transform.tag == "blueReload") opponentAgent = "redAgent";
     }
 
+    private void FixedUpdate()
+    {
+        if (rewardTriggerTime > 0.1f)
+        {
+            rewardTriggerTime = 0f;
+            rewardTrigger = true;
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
-        if (other.transform.tag == opponentAgent)
+        if (other.transform.GetComponent<RoboState>().dead) return;
+        if (other.transform.tag == opponentAgent &&
+            rewardTrigger)
         {
+            other.transform.GetComponent<RoboAgent>().OnEnemyReloadzone();
             return;
         }
         if (other.tag == "shieldSensor")
@@ -49,6 +62,7 @@ public class MapReload : MonoBehaviour
                 min.z <= other.bounds.center.z && other.bounds.center.z <= max.z)
             {
                 reloadTriggerTime += Time.deltaTime;
+                rewardTriggerTime += Time.deltaTime;
                 if (reloadTriggerTime > 0.5f && countTrigger == false &&
                     agentObject.GetComponent<RoboState>().reloadCount>0)
                 {
@@ -61,6 +75,7 @@ public class MapReload : MonoBehaviour
             {
                 agentObject.GetComponent<RoboState>().ReloadingToFalse();
                 reloadTriggerTime = 0f;
+                rewardTriggerTime = 0f;
                 countTrigger = false;
                 sensorOn = false;
             }

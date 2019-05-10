@@ -49466,8 +49466,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1056746, y: 0.2, z: 0.12167461}
-  m_Center: {x: 0, y: -0.05, z: -0.0040000025}
+  m_Size: {x: 0.1056746, y: 0.1, z: 0.12167461}
+  m_Center: {x: 0, y: -1, z: -0.0040000025}
 --- !u!1 &6981382552461023896
 GameObject:
   m_ObjectHideFlags: 0
@@ -74535,7 +74535,7 @@ SphereCollider:
   m_GameObject: {fileID: 6981382553253198898}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.34
   m_Center: {x: 0, y: 0.075, z: 0}
@@ -74672,7 +74672,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6981382553253198898}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 1479372276
   m_Radius: 0.35
   m_Speed: 4
@@ -74708,7 +74708,7 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   manual: 0
-  useVectorObs: 1
+  useRayPerception: 1
 --- !u!114 &94896277900748994
 MonoBehaviour:
   m_ObjectHideFlags: 0

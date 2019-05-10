@@ -23,6 +23,15 @@ public class MapManager : MonoBehaviour
         redShieldCount = 2;
         blueShieldCount = 2;
     }
+    public void ResetWorld()
+    {
+        FindRoboStates();
+        chargeTime = 0f;
+        redShieldOn = false;
+        blueShieldOn = false;
+        redShieldCount = 2;
+        blueShieldCount = 2;
+    }
     private void FindRoboStates()
     {
         if (transform.parent.Find("Agent Red 1") != null)
