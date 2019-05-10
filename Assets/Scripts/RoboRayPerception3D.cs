@@ -14,17 +14,19 @@ namespace MLAgents
             perceptionBuffer.Clear();
             foreach (float angle in rayAngles)
             {
+                Vector3 offsetByAngle = transform.Find("Fixed Pivot").transform.TransformDirection(
+                    PolarToCartesian(0.1f, angle));
                 endPosition = transform.Find("Fixed Pivot").transform.TransformDirection(
                     PolarToCartesian(rayDistance, angle));
                 endPosition.y = endOffset;
                 if (Application.isEditor)
                 {
-                    Debug.DrawRay(transform.Find("Fixed Pivot").transform.position + new Vector3(0f, startOffset, 0f),
+                    Debug.DrawRay(transform.Find("Fixed Pivot").transform.position + new Vector3(0f, startOffset, 0f) + offsetByAngle,
                         endPosition, Color.black, 0.01f, true);
                 }
                 float[] subList = new float[detectableObjects.Length + 2];
                 if (Physics.SphereCast(transform.Find("Fixed Pivot").transform.position +
-                                       new Vector3(0f, startOffset, 0f), 0.3f,
+                                       new Vector3(0f, startOffset, 0f) + offsetByAngle, 0.3f,
                     endPosition, out hit, rayDistance))
                 {
                     for (int i = 0; i < detectableObjects.Length; i++)
