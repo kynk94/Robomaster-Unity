@@ -1,6 +1,7 @@
 # 유니티 강화학습
 <img src="https://user-images.githubusercontent.com/41245985/57083071-f05e1200-6d32-11e9-9a57-692d790f0119.PNG"></img>  
 
+<img src="https://user-images.githubusercontent.com/41245985/57514723-0af44480-734c-11e9-9471-056c4a9e756a.png"></img>  
 ## 설치
 1. Visual Studio 설치 (유니티 개발환경 설치 체크, 유니티2018은 체크 해제)  
 2. Unity 홈페이지에서 Unity hub 설치   
